@@ -1,0 +1,157 @@
+// Variables
+let score = 0;
+let autoClicks = 0;
+let autoClickPrice = 50;
+let clickMultiplier = 1;
+let multiplierPrice = 100;
+let prestigeCount = 0;
+
+let achievements = {
+  firstClick: false,
+  hundredCookies: false,
+  firstAutoClicker: false,
+  firstMultiplier: false,
+  firstPrestige: false
+};
+
+// DOM elements
+const scoreDisplay = document.getElementById("score");
+const cookieImg = document.getElementById("cookie-img");
+const cookieBtn = document.getElementById("cookie-btn");
+const clickSound = document.getElementById("click-sound");
+
+const autoClickCount = document.getElementById("autoclick-count");
+const autoClickPriceDisplay = document.getElementById("autoclick-price");
+const buyAutoClickBtn = document.getElementById("buy-autoclick");
+
+const multDisplay = document.getElementById("click-mult");
+const multPriceDisplay = document.getElementById("mult-price");
+const buyMultBtn = document.getElementById("buy-mult");
+
+const prestigeDisplay = document.getElementById("prestige-count");
+const prestigeBtn = document.getElementById("do-prestige");
+
+// Load from localStorage
+function loadGame() {
+  score = parseInt(localStorage.getItem("score")) || 0;
+  autoClicks = parseInt(localStorage.getItem("autoClicks")) || 0;
+  autoClickPrice = parseInt(localStorage.getItem("autoClickPrice")) || 50;
+  clickMultiplier = parseInt(localStorage.getItem("clickMultiplier")) || 1;
+  multiplierPrice = parseInt(localStorage.getItem("multiplierPrice")) || 100;
+  prestigeCount = parseInt(localStorage.getItem("prestigeCount")) || 0;
+  achievements = JSON.parse(localStorage.getItem("achievements")) || achievements;
+}
+
+// Save to localStorage
+function saveGame() {
+  localStorage.setItem("score", score);
+  localStorage.setItem("autoClicks", autoClicks);
+  localStorage.setItem("autoClickPrice", autoClickPrice);
+  localStorage.setItem("clickMultiplier", clickMultiplier);
+  localStorage.setItem("multiplierPrice", multiplierPrice);
+  localStorage.setItem("prestigeCount", prestigeCount);
+  localStorage.setItem("achievements", JSON.stringify(achievements));
+}
+
+// Update UI
+function updateDisplay() {
+  scoreDisplay.textContent = score;
+  autoClickCount.textContent = autoClicks;
+  autoClickPriceDisplay.textContent = autoClickPrice;
+  multDisplay.textContent = clickMultiplier;
+  multPriceDisplay.textContent = multiplierPrice;
+  prestigeDisplay.textContent = prestigeCount;
+}
+
+// Gagner des cookies
+function addCookies(amount) {
+  score += amount;
+  updateDisplay();
+  if (score >= 100 && !achievements.hundredCookies) {
+  achievements.hundredCookies = true;
+  showAchievement("100 cookies !");
+}
+}
+
+// Achat auto-click
+buyAutoClickBtn.addEventListener("click", () => {
+  if (score >= autoClickPrice) {
+    score -= autoClickPrice;
+    autoClicks++;
+    autoClickPrice += 10;
+    updateDisplay();
+    if (!achievements.firstAutoClicker && autoClicks === 1) {
+  achievements.firstAutoClicker = true;
+  showAchievement("Premier auto-clicker !");
+}
+  }
+});
+
+// Achat multiplicateur
+buyMultBtn.addEventListener("click", () => {
+  if (score >= multiplierPrice) {
+    score -= multiplierPrice;
+    clickMultiplier++;
+    multiplierPrice = Math.floor(multiplierPrice * 1.5);
+    updateDisplay();
+    if (!achievements.firstMultiplier && clickMultiplier === 2) {
+  achievements.firstMultiplier = true;
+  showAchievement("Premier multiplicateur !");
+}
+  }
+});
+
+// Prestige
+prestigeBtn.addEventListener("click", () => {
+  if (score >= 1000) {
+    prestigeCount++;
+    score = 0;
+    autoClicks = 0;
+    autoClickPrice = 50;
+    clickMultiplier = 1;
+    multiplierPrice = 100;
+    updateDisplay();
+    if (!achievements.firstPrestige && prestigeCount === 1) {
+  achievements.firstPrestige = true;
+  showAchievement("Premier prestige !");
+}
+  }
+});
+
+// Clicks
+function handleClick() {
+  addCookies(clickMultiplier + prestigeCount); // bonus prestige
+  clickSound.currentTime = 0;
+  clickSound.play();
+  if (!achievements.firstClick) {
+  achievements.firstClick = true;
+  showAchievement("Premier clic !");
+}
+}
+
+cookieImg.addEventListener("click", handleClick);
+cookieBtn.addEventListener("click", handleClick);
+
+// AutoClick Loop
+setInterval(() => {
+  addCookies(autoClicks);
+}, 1000);
+
+// Auto Save every 5 seconds
+setInterval(saveGame, 5000);
+
+// Initialisation
+loadGame();
+updateDisplay();
+function showAchievement(text) {
+  const popup = document.getElementById("achievement-popup");
+  const popupText = document.getElementById("achievement-text");
+  popupText.textContent = "🏆 Succès débloqué : " + text;
+  popup.classList.remove("hidden");
+  popup.classList.add("show");
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+    popup.classList.add("hidden");
+  }, 3000);
+}
