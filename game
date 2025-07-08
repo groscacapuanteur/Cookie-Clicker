@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clicker Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <div id="achievement-popup" class="achievement-popup hidden">
+  <p id="achievement-text"></p>
+</div>
+</head>
+<body>
+  <div class="container">
+    <h1>Clicker Game</h1>
+    <p>Cookies : <span id="score">0</span></p>
+
+    <!-- Cookie -->
+    <img src="cookie.png" id="cookie-img" alt="Cookie" class="cookie-img" />
+
+    <!-- Texte alternatif -->
+    <button id="cookie-btn" class="button">🍪 Clique-moi !</button>
+
+    <!-- Boutique -->
+    <div class="shop">
+      <h2>Boutique</h2>
+      <p>Auto-clickers : <span id="autoclick-count">0</span></p>
+      <p>Prix auto-clicker : <span id="autoclick-price">50</span> cookies</p>
+      <button id="buy-autoclick" class="button">Acheter auto-clicker</button>
+
+      <p>Multiplicateur de clic : x<span id="click-mult">1</span></p>
+      <p>Prix multiplicateur : <span id="mult-price">100</span> cookies</p>
+      <button id="buy-mult" class="button">Acheter multiplicateur</button>
+    </div>
+
+    <!-- Prestige -->
+    <div class="prestige">
+      <h2>Prestige</h2>
+      <p>Prestiges : <span id="prestige-count">0</span></p>
+      <button id="do-prestige" class="button">Faire un Prestige (1000 cookies)</button>
+    </div>
+
+    <a href="index.html" class="link">← Retour à l’accueil</a>
+  </div>
+
+  <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
