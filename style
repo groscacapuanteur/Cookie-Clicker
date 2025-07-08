@@ -1,0 +1,81 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  text-align: center;
+  padding: 40px;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.button {
+  font-size: 18px;
+  padding: 12px 25px;
+  background-color: #f5a623;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.button:hover {
+  background-color: #d48806;
+}
+
+.link {
+  display: inline-block;
+  margin-top: 30px;
+  color: #333;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.cookie-img {
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  margin-bottom: 10px;
+}
+
+.cookie-img:active {
+  transform: scale(0.95);
+}
+
+.shop, .prestige {
+  margin-top: 30px;
+  background-color: #fff4cc;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+}
+.achievement-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 999;
+  transition: opacity 0.5s ease;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.show {
+  opacity: 1;
+}
